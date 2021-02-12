@@ -44,7 +44,6 @@ export AWS_SECRET_ACCESS_KEY="AvO..."
 export AWS_DEFAULT_REGION="eu-west-2"
 ``` 
 
-
 #### Deploy the CDK project
 ```sh
 ## show the CloudFormation template to be executed
@@ -59,20 +58,44 @@ cdk deploy
 
 ```sh
 ## get hostname of the EC2 instance created
-export server="ec2-18-134-244-46.eu-west-2.compute.amazonaws.com"
+export server="xxxxxxxxxxxx.compute.amazonaws.com"
 
 ssh ubuntu@$server -i ~/.ssh/chilcan0.pub
 
 ## install all devops tooling
-cd /home/ubuntu/playground/
+cd $HOME/playground/
 wget -qN https://raw.githubusercontent.com/chilcano/how-tos/main/src/devops_tools_install_v3.sh
 wget -qN https://raw.githubusercontent.com/chilcano/how-tos/main/src/devops_tools_remove_v3.sh
 sudo chmod +x devops_tools_*.sh
 sudo ./devops_tools_install_v3.sh
 
-## prompt
-sudo apt -yqq install golang-go curl jq git unzip wget
+## load a custom prompt
 curl -s https://raw.githubusercontent.com/chilcano/how-tos/master/src/custom_prompt_with_powerline_go.sh | bash
-
 ``` 
 
+### 4. MTLS on Java8 service
+
+
+```sh
+git clone https://github.com/chilcano/mtls-apps-examples $HOME/playground/mtls-apps-examples/
+
+git clone https://github.com/microservices-security-in-action/samples mss-book/
+
+
+
+cd $HOME/playground/mtls-apps-examples/mtls-java8
+
+## download dependencies, compile and run app
+cd server
+mvn install
+mvn spring-boot:run
+``` 
+
+#### 1) One-way TLS
+
+```sh
+nano $HOME/playground/mtls-apps-examples/mtls-java8/server/target/classes/application.yml
+nano $HOME/playground/mtls-apps-examples/mtls-java8/server/src/main/resources/application.yml
+
+curl -i --insecure -v https://localhost:8443/api/hello
+``` 
