@@ -44,3 +44,30 @@ export AWS_SECRET_ACCESS_KEY="AvO..."
 export AWS_DEFAULT_REGION="eu-west-2"
 ``` 
 
+
+#### Deploy the CDK project
+```sh
+## show the CloudFormation template to be executed
+cdk synth
+
+# deploy 
+cdk deploy
+
+``` 
+
+### 3. Connect to the EC2 instance 
+
+```sh
+## get hostname of the EC2 instance created
+export server="ec2-18-134-244-46.eu-west-2.compute.amazonaws.com"
+
+ssh ubuntu@$server -i ~/.ssh/chilcan0.pub
+
+## install all devops tooling
+cd /playground/
+sudo ./devops_tools_install_v3.sh
+
+
+
+``` 
+

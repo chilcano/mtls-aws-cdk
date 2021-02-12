@@ -14,7 +14,7 @@ export class MtlsAwsCdkStack extends cdk.Stack {
       cidr: '10.0.0.0/21', 
       subnetConfiguration: [{
           subnetType: ec2.SubnetType.PUBLIC,
-          name: 'subnetPub',
+          name: 'mtls_subnet_pub',
           cidrMask: 24
         }]
     });
@@ -22,16 +22,16 @@ export class MtlsAwsCdkStack extends cdk.Stack {
     // security-group
     const secGrp = new ec2.SecurityGroup(this, 'SG', {
       vpc: vpc,
-      securityGroupName: 'mtlsSg',
+      securityGroupName: 'mtls_sg',
       description: 'Allow HTTP traffic to EC2 instance from anywhere',
       allowAllOutbound: true 
     });
 
-    secGrp.addIngressRule(
-      ec2.Peer.anyIpv4(), 
-      ec2.Port.tcp(8080), // server listen on 8080 port 
-      'Allow ingress HTTP traffic'                                                                                                                                                     
-    );
+    //secGrp.addIngressRule(
+    //  ec2.Peer.anyIpv4(), 
+    //  ec2.Port.tcp(8080), // server listen on 8080 port 
+    //  'Allow ingress HTTP traffic'                                                                                                                                                     
+    //);
     secGrp.addIngressRule(
       ec2.Peer.anyIpv4(), 
       ec2.Port.tcp(8443), // server listen on 8443 port 
@@ -61,7 +61,7 @@ export class MtlsAwsCdkStack extends cdk.Stack {
     const instance =  new ec2.Instance(this, 'EC2', {
       vpc: vpc,
       machineImage: imgLinuxUbu,
-      instanceName: 'mtls-java-1',
+      instanceName: 'mtls-usrv-box',
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),
       securityGroup: secGrp
     });
