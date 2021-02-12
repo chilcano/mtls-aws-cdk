@@ -65,6 +65,9 @@ ssh ubuntu@$server -i ~/.ssh/chilcan0.pub
 
 ## install all devops tooling
 cd /playground/
+wget -qN https://raw.githubusercontent.com/chilcano/how-tos/main/src/devops_tools_install_v3.sh
+wget -qN https://raw.githubusercontent.com/chilcano/how-tos/main/src/devops_tools_remove_v3.sh
+sudo chmod +x devops_tools_*.sh
 sudo ./devops_tools_install_v3.sh
 
 
