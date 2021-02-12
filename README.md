@@ -64,13 +64,15 @@ export server="ec2-18-134-244-46.eu-west-2.compute.amazonaws.com"
 ssh ubuntu@$server -i ~/.ssh/chilcan0.pub
 
 ## install all devops tooling
-cd /playground/
+cd /home/ubuntu/playground/
 wget -qN https://raw.githubusercontent.com/chilcano/how-tos/main/src/devops_tools_install_v3.sh
 wget -qN https://raw.githubusercontent.com/chilcano/how-tos/main/src/devops_tools_remove_v3.sh
 sudo chmod +x devops_tools_*.sh
 sudo ./devops_tools_install_v3.sh
 
-
+## prompt
+sudo apt -yqq install golang-go curl jq git unzip wget
+curl -s https://raw.githubusercontent.com/chilcano/how-tos/master/src/custom_prompt_with_powerline_go.sh | bash
 
 ``` 
 
