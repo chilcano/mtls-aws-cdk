@@ -73,65 +73,35 @@ sudo ./devops_tools_install_v3.sh
 curl -s https://raw.githubusercontent.com/chilcano/how-tos/master/src/custom_prompt_with_powerline_go.sh | bash
 ``` 
 
-### 4. MTLS on Java8 service
-
+### 4. Clone GitHub repositories with the applications
 
 ```sh
-git clone https://github.com/chilcano/mtls-apps-examples $HOME/playground/mtls-apps-examples/
+## Simple Spring Boot Microservices and MTLS
+$ git clone https://github.com/chilcano/mtls-java $HOME/playground/mtls-java/
 
-git clone https://github.com/microservices-security-in-action/samples mss-book/
-
-
-
-cd $HOME/playground/mtls-apps-examples/mtls-java8
 
 ## download dependencies, compile and run app
-cd server
-mvn install
-mvn spring-boot:run
-``` 
+$ cd $HOME/playground/mtls-java/
+$ cd server
+$ mvn install
+$ mvn spring-boot:run
 
-#### 1) One-way TLS
+## Emojivoto App and MTLS
+$ git clone https://github.com/chilcano/mtls-emojivoto-tf $HOME/playground/mtls-java/
 
-```sh
-nano $HOME/playground/mtls-apps-examples/mtls-java8/server/target/classes/application.yml
-nano $HOME/playground/mtls-apps-examples/mtls-java8/server/src/main/resources/application.yml
-
-curl -i --insecure -v https://localhost:8443/api/hello
-``` 
-
-## Emojivoto
-
-```sh
-
-$ terraform apply \
-  -var key_name="chilcan0" \
-  -var puppet_ssh_privkey_filename="chilcan0" \
+## aws config, init, plan and apply terraform
+$ aws configure
+$ terraform init
+$ terraform plan
+$ terraform apply 
+  -var key_name="<your-key-name>" \
+  -var puppet_ssh_privkey_filename="<your-key-name>" \
   -var instance_type="t2.medium" \
   -var region="eu-west-2"
 
-...
-aws_route53_record.web: Creation complete after 1m15s [id=Z0320811VV710MUK8DUN_web.emojivoto.local_A]
-
-Apply complete! Resources: 24 added, 0 changed, 0 destroyed.
-
-Outputs:
-
-ca_ip = "35.178.182.208"
-emoji_ip = "18.132.210.205"
-puppet_ip = "18.134.6.169"
-voting_ip = "18.132.63.157"
-web_ip = "18.132.246.79"
-
-$ sudo nano /etc/hosts
-
-...
-### MTLS Emojivoto
-18.132.246.79   web.emojivoto.local
-```
-
-Open a browser https://web.emojivoto.local and accept the Cert as trusted. Further info follow this: https://github.com/smallstep/step-aws-emojivoto
-
+## test
+$ curl -I --cacert root_ca.crt https://web.emojivoto.local
+``` 
 
 ### Destroy
 
